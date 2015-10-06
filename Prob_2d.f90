@@ -81,7 +81,7 @@ subroutine ca_initdata(level,time,lo,hi,nscal, &
   double precision dist,x,y
   integer i,j,n
 
-  double precision t0,x1,y1,r1,temp
+  double precision t0,x1,y1,r1,temp,temp0,d_temp
 
   double precision temppres(state_l1:state_h1,state_l2:state_h2)
 
@@ -104,7 +104,14 @@ subroutine ca_initdata(level,time,lo,hi,nscal, &
   enddo
 
   ! put in temp perturbation
-  
+  temp0=1.0d8
+  d_temp=3.81d8
+  do j = lo(2), hi(2)
+     do i = lo(1), hi(1)
+        state(i,j,UTEMP)=temp0+d_temp/(1+exp((xlo(2)-1.2)/0.36))
+        call eos(eos_input_rt, eos_state)
+     end do
+  end do
   
   do j = lo(2), hi(2)
      do i = lo(1), hi(1)
@@ -143,8 +150,8 @@ subroutine ca_initdata(level,time,lo,hi,nscal, &
 
         t0 = state(i,j,UTEMP)
 
-        x1 = 5.0d7
-        y1 = 6.5d7
+        x1 = 0
+        y1 = 0
         r1 = sqrt( (x-x1)**2 +(y-y1)**2 ) / (2.5d6*pert_rad_factor)
 
         state(i,j,UTEMP) = t0 * (1.d0 + pert_temp_factor* &
