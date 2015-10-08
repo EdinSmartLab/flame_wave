@@ -103,16 +103,6 @@ subroutine ca_initdata(level,time,lo,hi,nscal, &
      enddo
   enddo
 
-  ! put in temp perturbation
-  temp0=1.0d8
-  d_temp=3.81d8
-  do j = lo(2), hi(2)
-     do i = lo(1), hi(1)
-        state(i,j,UTEMP)=temp0+d_temp/(1+exp((xlo(2)-1.2)/0.36))
-        call eos(eos_input_rt, eos_state)
-     end do
-  end do
-  
   do j = lo(2), hi(2)
      do i = lo(1), hi(1)
         eos_state%rho = state(i,j,URHO)
@@ -143,12 +133,16 @@ subroutine ca_initdata(level,time,lo,hi,nscal, &
   state(:,:,UMX:UMY) = 0.d0
 
   ! Now add the perturbation
+  ! put in temp perturbation
+  temp0=1.0d8
+  d_temp=3.81d8 
+
   do j = lo(2), hi(2)
      y = xlo(2) + delta(2)*(float(j-lo(2)) + 0.5d0)
      do i = lo(1), hi(1)
         x = xlo(1) + delta(1)*(float(i-lo(1)) + 0.5d0)
 
-        t0 = state(i,j,UTEMP)
+        t0 = state(i,j,UTEMP)+temp0+d_temp/(1+exp((x-1.2d0)/0.36d0))
 
         x1 = 0
         y1 = 0
