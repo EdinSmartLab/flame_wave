@@ -141,8 +141,10 @@ subroutine ca_initdata(level,time,lo,hi,nscal, &
      y = xlo(2) + delta(2)*(float(j-lo(2)) + 0.5d0)
      do i = lo(1), hi(1)
         x = xlo(1) + delta(1)*(float(i-lo(1)) + 0.5d0)
-
-        t0 = state(i,j,UTEMP)+temp0+d_temp/(1+exp((x-1.2d0)/0.36d0))
+        
+        state(i,j,UTEMP)=temp0+d_temp/(1+exp((x-1.2d0)/0.36d0))
+      
+        t0 = state(i,j,UTEMP)
 
         x1 = 0
         y1 = 0
