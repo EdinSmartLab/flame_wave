@@ -142,19 +142,8 @@ subroutine ca_initdata(level,time,lo,hi,nscal, &
      do i = lo(1), hi(1)
         x = xlo(1) + delta(1)*(float(i-lo(1)) + 0.5d0)
         
-        state(i,j,UTEMP)=temp0+d_temp/(1+exp((x-1.2d0)/0.36d0))
+        state(i,j,UTEMP)=temp0+d_temp/(1+exp((x-1.2d5)/0.36d5))
       
-        t0 = state(i,j,UTEMP)
-
-        x1 = 0
-        y1 = 0
-        r1 = sqrt( (x-x1)**2 +(y-y1)**2 ) / (2.5d6*pert_rad_factor)
-
-        state(i,j,UTEMP) = t0 * (1.d0 + pert_temp_factor* &
-             (0.150d0 * (1.d0 + tanh(2.d0-r1))))
-
-        state(i,j,UEINT) = state(i,j,UEINT) / state(i,j,URHO)
-
         do n = 1,nspec
            state(i,j,UFS+n-1) =  state(i,j,UFS+n-1) / state(i,j,URHO)
         end do
