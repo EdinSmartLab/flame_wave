@@ -1,0 +1,103 @@
+===============================================================================
+ Job Information
+===============================================================================
+job name: 
+
+inputs file: inputs_2d
+
+number of MPI processes: 1
+
+CPU time used since start of simulation (CPU-hours): 0.162324
+
+===============================================================================
+ Plotfile Information
+===============================================================================
+output data / time: Tue Oct 13 14:32:39 2015
+output dir:         /home/ltrnolan/flame_wave
+
+
+===============================================================================
+ Build Information
+===============================================================================
+build date:    2015-10-12 15:35:52.811958
+build machine: Linux bender.astro.sunysb.edu 4.1.8-200.fc22.x86_64 #1 SMP Tue Sep 22 12:13:21 UTC 2015 x86_64 x86_64 x86_64 GNU/Linux
+build dir:     /home/ltrnolan/flame_wave
+BoxLib dir:    /home/ltrnolan/BoxLib/
+
+COMP:  g++
+FCOMP: gfortran
+
+EOS:     /home/ltrnolan/Castro//EOS/helmeos
+network: /home/ltrnolan/Castro//Networks/general_null
+
+Castro   git hash: e92d05b2aa7422d1242d5abc5fc620bb6e177422
+BoxLib   git hash: 42f20c9c0682b8c60a10f203aa542a65d528fa1d
+
+
+===============================================================================
+ Grid Information
+===============================================================================
+ level: 0
+   number of boxes = 2
+   maximum zones   = 128 64 
+
+ Boundary conditions
+   -x: interior
+   +x: interior
+   -y: inflow
+   +y: outflow
+
+
+===============================================================================
+ Species Information
+===============================================================================
+ index                         name              A              Z
+--------------------------------------------------------------------------------
+     0                          He4              4              2
+     1                          C12             12              6
+     2                          O16             16              8
+     3                         Fe56             56             26
+
+
+===============================================================================
+ Inputs File Parameters
+===============================================================================
+max_step = 10000
+stop_time = 2.5
+geometry.is_periodic = 1 0
+geometry.coord_sys = 0
+geometry.prob_lo = 0 0
+geometry.prob_hi = 1e6 0.5e6
+amr.n_cell = 128 64
+castro.lo_bc = 0 1
+castro.hi_bc = 0 2
+castro.do_hydro = 1
+castro.do_react = 1
+castro.do_grav = 1
+castro.do_sponge = 1
+castro.ppm_type = 1
+castro.ppm_reference = 1
+castro.ppm_trace_grav = 1
+castro.grav_source_type = 2
+castro.allow_negative_energy = 0
+gravity.gravity_type = ConstantGrav
+gravity.const_grav = -2.0e14
+castro.cfl = 0.9
+castro.init_shrink = 1.0
+castro.change_max = 1.1
+castro.dt_cutoff = 5.e-20
+castro.sum_interval = 1
+castro.v = 1
+amr.v = 1
+amr.max_level = 0
+amr.ref_ratio(nvals = 4)  :: [2, 2, 2, 2]
+amr.regrid_int(nvals = 4)  :: [2, 2, 2, 2]
+amr.blocking_factor = 4
+amr.max_grid_size = 64
+amr.n_error_buf = 2 2 2 2
+amr.check_file = chk
+amr.check_int = 1000
+amr.plot_file = plt
+amr.plot_int = 1000
+amr.derive_plot_vars = ALL
+amr.probin_file = probin
