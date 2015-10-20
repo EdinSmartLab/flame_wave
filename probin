@@ -14,3 +14,12 @@
   sponge_timescale     = 1.d-5
 
 /
+
+&perturbation
+
+  temp0 = 1.0d8
+  dtemp = 3.81d8
+  x_half_max = 1.0d3
+  x_half_width = 3.6d2
+
+/

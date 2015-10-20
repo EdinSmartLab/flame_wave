@@ -81,11 +81,17 @@ subroutine ca_initdata(level,time,lo,hi,nscal, &
   double precision dist,x,y
   integer i,j,n
 
-  double precision t0,x1,y1,r1,temp,temp0,d_temp
+  double precision t0,x1,y1,r1,temp
 
   double precision temppres(state_l1:state_h1,state_l2:state_h2)
 
+  namelist /perturbation/ temp0, dtemp, x_half_max, x_half_width
+
   type (eos_t) :: eos_state
+
+  open(9,file='probin',form='formatted',status='old')
+  read(9,perturbation)
+  close(unit=9)
 
   do j = lo(2), hi(2)
      y = xlo(2) + delta(2)*(float(j-lo(2)) + 0.5d0)
@@ -133,16 +139,13 @@ subroutine ca_initdata(level,time,lo,hi,nscal, &
   state(:,:,UMX:UMY) = 0.d0
 
   ! Now add the perturbation
-  ! put in temp perturbation
-  temp0=1.0d8
-  d_temp=3.81d8 
 
   do j = lo(2), hi(2)
      y = xlo(2) + delta(2)*(float(j-lo(2)) + 0.5d0)
      do i = lo(1), hi(1)
         x = xlo(1) + delta(1)*(float(i-lo(1)) + 0.5d0)
         
-        state(i,j,UTEMP)=temp0+d_temp/(1+exp((x-1.2d5)/0.36d5))
+        state(i,j,UTEMP)=temp0+dtemp/(1+exp((x-x_half_max)/x_half_width))
       
         do n = 1,nspec
            state(i,j,UFS+n-1) =  state(i,j,UFS+n-1) / state(i,j,URHO)
