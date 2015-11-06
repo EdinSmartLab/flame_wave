@@ -127,7 +127,7 @@ subroutine ca_initdata(level,time,lo,hi,nscal, &
 
         state(i,j,UEDEN) = state(i,j,URHO) * state(i,j,UEINT)
         state(i,j,UEINT) = state(i,j,URHO) * state(i,j,UEINT)
-
+        
         do n = 1,nspec
            state(i,j,UFS+n-1) = state(i,j,URHO) * state(i,j,UFS+n-1)
         end do
@@ -136,17 +136,16 @@ subroutine ca_initdata(level,time,lo,hi,nscal, &
   enddo
 
   ! Initial velocities = 0
-  state(:,:,UMX:UMY) = 0.d0
+  state(:,:,UMX:UMY) = 0.d0 
 
   ! Now add the perturbation
-
   do j = lo(2), hi(2)
      y = xlo(2) + delta(2)*(float(j-lo(2)) + 0.5d0)
      do i = lo(1), hi(1)
         x = xlo(1) + delta(1)*(float(i-lo(1)) + 0.5d0)
         
         state(i,j,UTEMP)=temp0+dtemp/(1+exp((x-x_half_max)/x_half_width))
-      
+         
         do n = 1,nspec
            state(i,j,UFS+n-1) =  state(i,j,UFS+n-1) / state(i,j,URHO)
         end do
