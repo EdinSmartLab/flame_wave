@@ -20,6 +20,10 @@ module extern_probin_module
 
   logical, save, public :: use_eos_coulomb = .true.
   logical, save, public :: eos_input_is_constant = .false.
+  integer, save, public :: eos_acc_cutoff = 128
+  logical, save, public :: eos_do_acc = .true.
+  real (kind=dp_t), save, public :: const_conductivity = 1.0d0
+  real (kind=dp_t), save, public :: const_viscosity = 1.0d-4
 
 end module extern_probin_module
 
@@ -40,9 +44,17 @@ subroutine runtime_init(name,namlen)
 
   namelist /extern/ use_eos_coulomb
   namelist /extern/ eos_input_is_constant
+  namelist /extern/ eos_acc_cutoff
+  namelist /extern/ eos_do_acc
+  namelist /extern/ const_conductivity
+  namelist /extern/ const_viscosity
 
   use_eos_coulomb = .true.
   eos_input_is_constant = .false.
+  eos_acc_cutoff = 128
+  eos_do_acc = .true.
+  const_conductivity = 1.0d0
+  const_viscosity = 1.0d-4
 
 
   ! create the filename

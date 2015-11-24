@@ -145,7 +145,7 @@ subroutine ca_initdata(level,time,lo,hi,nscal, &
         x = xlo(1) + delta(1)*(float(i-lo(1)) + 0.5d0)
         
         if (state(i,j,UFS)>0.1) then
-                state(i,j,UTEMP)=state(i,j,UTEMP)+temp0+dtemp/(1+exp((x-x_half_max)/x_half_width))   
+                state(i,j,UTEMP)=state(i,j,UTEMP)+dtemp/(1+exp((x-x_half_max)/x_half_width))   
         end if 
  
         do n = 1,nspec
