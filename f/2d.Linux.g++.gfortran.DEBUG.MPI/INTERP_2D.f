@@ -582,7 +582,6 @@ c
                         print *,'ORIG_CORR_FACT = ',orig_corr_fact
                         call bl_abort(" ")
                      endif
-
                   end do
                end do
             end do

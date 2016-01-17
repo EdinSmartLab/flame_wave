@@ -43,7 +43,6 @@ c ---------------------------------------------------------------
       integer Norder, NN, m
       parameter (Norder = 3)
       DOUBLE PRECISION x(Norder), y(Norder), c(Norder), xInt
-
       ratioy = ratios(2)
 
       jclo = cb_l2
@@ -149,7 +148,6 @@ c ---------------------------------------------------------------
       integer Norder, NN, m
       parameter (Norder = 3)
       DOUBLE PRECISION x(Norder), y(Norder), c(Norder), xInt
-
       ratioy = ratios(2)
 
       jclo = cb_l2

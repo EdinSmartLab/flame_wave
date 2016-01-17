@@ -27,9 +27,7 @@ c
             num = num*(xInt - x(i))
             den = den*(x(j) - x(i))
          end do
-
          if (den .eq. 0.0D0) STOP 'polyInterpCoeff::invalid data'
-
          c(j) = num/den
       end do
       return

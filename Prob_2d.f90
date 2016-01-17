@@ -89,9 +89,9 @@ subroutine ca_initdata(level,time,lo,hi,nscal, &
 
   type (eos_t) :: eos_state
 
-  open(9,file='probin',form='formatted',status='old')
-  read(9,perturbation)
-  close(unit=9)
+  open(1,file='probin',form='formatted',status='old')
+  read(1,perturbation)
+  close(unit=1)
 
   do j = lo(2), hi(2)
      y = xlo(2) + delta(2)*(float(j-lo(2)) + 0.5d0)
@@ -119,6 +119,10 @@ subroutine ca_initdata(level,time,lo,hi,nscal, &
 
         state(i,j,UEINT) = eos_state%e
         temppres(i,j) = eos_state%p
+
+        open(unit=2, file='eos.dat')
+        write(2,*) state(i,j,URHO), ' ',state(i,j,UTEMP),' ',temppres(i,j)
+
      end do
   end do
 
