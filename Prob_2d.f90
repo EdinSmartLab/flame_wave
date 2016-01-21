@@ -17,6 +17,11 @@ subroutine PROBINIT (init,name,namlen,problo,probhi)
   integer, parameter :: maxlen = 256
   character probin*(maxlen)
 
+  integer :: a
+  double precision :: dx=40, g=2.0d14
+  double precision :: dpdr, rho
+
+
   ! Build "probin" filename from C++ land --
   ! the name of file containing fortin namelist.
 
@@ -36,6 +41,16 @@ subroutine PROBINIT (init,name,namlen,problo,probhi)
   ! Read initial model
   call read_model_file(model_name)
 
+  open(unit=15, file="output.dat")
+
+  do a=2,npts_model
+        dpdr=abs((model_state(a,ipres_model)-model_state(a-1,ipres_model))/(model_r(a)-model_r(a-1)))
+        rho=(model_state(a,idens_model)+model_state(a-1,idens_model))/2
+        write (15,*) model_r(a),"       ",dpdr,"        ",rho*g,&
+        "       ",abs(dpdr-rho*g)/dpdr
+  enddo
+
+  close(15)
 
 end subroutine PROBINIT
 
