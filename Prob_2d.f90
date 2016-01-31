@@ -18,7 +18,7 @@ subroutine PROBINIT (init,name,namlen,problo,probhi)
   character probin*(maxlen)
 
   integer :: a
-  double precision :: dx=40, g=2.0d14
+  double precision :: g=2.0d14
   double precision :: dpdr, rho
 
 
@@ -45,7 +45,7 @@ subroutine PROBINIT (init,name,namlen,problo,probhi)
 
   do a=2,npts_model
         dpdr=abs((model_state(a,ipres_model)-model_state(a-1,ipres_model))/(model_r(a)-model_r(a-1)))
-        rho=(model_state(a,idens_model)+model_state(a-1,idens_model))/2
+        rho=(model_state(a,idens_model))
         write (15,*) model_r(a),"       ",dpdr,"        ",rho*g,&
         "       ",abs(dpdr-rho*g)/dpdr
   enddo
