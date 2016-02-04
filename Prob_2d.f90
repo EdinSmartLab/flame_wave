@@ -18,8 +18,10 @@ subroutine PROBINIT (init,name,namlen,problo,probhi)
   character probin*(maxlen)
 
   integer :: a
-  double precision :: g=2.0d14
-  double precision :: dpdr, rho
+  real (kind=dp_t) :: g=2.0d14
+  real (kind=dp_t) :: xmin=0.0_dp_t, xmax=2.e3_dp_t, nx=640
+  real (kind=dp_t) :: delx, dCoord, xzn_1, xzn_2
+  double precision :: dpdr, rhog, hse_err
 
 
   ! Build "probin" filename from C++ land --
@@ -43,11 +45,17 @@ subroutine PROBINIT (init,name,namlen,problo,probhi)
 
   open(unit=15, file="output.dat")
 
-  do a=2,npts_model
-        dpdr=abs((model_state(a,ipres_model)-model_state(a-1,ipres_model))/(model_r(a)-model_r(a-1)))
-        rho=(model_state(a,idens_model))
-        write (15,*) model_r(a),"       ",dpdr,"        ",rho*g,&
-        "       ",abs(dpdr-rho*g)/dpdr
+  dCoord=(xmax-xmin)/dble(nx)
+
+  do a=2,nx-1
+     xzn_1 = model_r(a)
+     xzn_2 = model_r(a-1)
+     delx=xzn_2-xzn_1
+     dpdr=(model_state(a,ipres_model)-model_state(a-1,ipres_model))/delx
+     rhog=0.5*(model_state(a,idens_model)+model_state(a-1,idens_model))*g
+     hse_err=abs(dpdr-rhog)/abs(dpdr)
+     write (15,*) model_r(a),"       ",dpdr,"        ",rhog,&
+          "       ",hse_err
   enddo
 
   close(15)
