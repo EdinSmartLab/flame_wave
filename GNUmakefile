@@ -1,15 +1,14 @@
 PRECISION  = DOUBLE
 PROFILE    = FALSE
 
-DEBUG      = TRUE
+DEBUG      = FALSE
 
 DIM        = 2
 
 COMP	   = g++
 FCOMP	   = gfortran
 
-USE_MPI    = TRUE
-BOXLIB_USE_MPI_WRAPPERS = 1
+USE_MPI    = FALSE
 
 USE_GRAV   = TRUE
 USE_REACT = TRUE
@@ -27,8 +26,8 @@ ifdef MICROPHYSICS_DIR
   EOS_dir     := helmholtz
 
   # This sets the network directory in $(MICROPHYSICS_DIR)/networks
-  Network_dir := general_null
-  GENERAL_NET_INPUTS := $(CASTRO_DIR)/Networks/general_null/triple_alpha_plus_o.net
+  Network_dir := triple_alpha_plus_cago
+  #GENERAL_NET_INPUTS := $(CASTRO_DIR)/Networks/general_null/triple_alpha_plus_o.net
 
 else
 
