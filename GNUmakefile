@@ -22,7 +22,7 @@ USE_DIFFUSION = TRUE
 
 ifdef MICROPHYSICS_DIR
 
-  # This sets the EOS directory in $(MICROPHYSICS_DIR)/eos
+# This sets the EOS directory in $(MICROPHYSICS_DIR)/eos
   EOS_dir     := helmholtz
 
   # This sets the network directory in $(MICROPHYSICS_DIR)/networks

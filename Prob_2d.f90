@@ -12,14 +12,15 @@ subroutine PROBINIT (init,name,namlen,problo,probhi)
 
   integer untin,i
   
-  namelist /fortin/ model_name, pert_temp_factor, pert_rad_factor
+  namelist /fortin/ model_name, pert_temp_factor, pert_rad_factor, interp_BC, zero_vels
   
   integer, parameter :: maxlen = 256
   character probin*(maxlen)
 
   integer :: a
   real (kind=dp_t) :: g=2.0d14
-  real (kind=dp_t) :: xmin=0.0_dp_t, xmax=2.e3_dp_t, nx=640
+  real (kind=dp_t) :: xmin=0.0_dp_t, xmax=2.e3_dp_t
+  integer, parameter :: nx=640
   real (kind=dp_t) :: delx, dCoord, xzn_1, xzn_2
   double precision :: dpdr, rhog, hse_err
 
@@ -35,8 +36,10 @@ subroutine PROBINIT (init,name,namlen,problo,probhi)
 
   
   ! Read namelists
-  untin = 9
-  open(untin,file=probin(1:namlen),form='formatted',status='old')
+  interp_BC = .false.
+  zero_vels = .false.
+
+  open(newunit=untin,file=probin(1:namlen),form='formatted',status='old')
   read(untin,fortin)
   close(unit=untin)
 
@@ -89,7 +92,7 @@ subroutine ca_initdata(level,time,lo,hi,nscal, &
   use probdata_module
   use interpolate_module
   use eos_module
-  use meth_params_module, only : NVAR, URHO, UMX, UMY, UEDEN, UEINT, UFS, UTEMP
+  use meth_params_module, only : NVAR, URHO, UMX, UMZ, UEDEN, UEINT, UFS, UTEMP
   use network, only: nspec
   use model_parser_module
   
@@ -163,7 +166,7 @@ subroutine ca_initdata(level,time,lo,hi,nscal, &
   enddo
 
   ! Initial velocities = 0
-  state(:,:,UMX:UMY) = 0.d0 
+  state(:,:,UMX:UMZ) = 0.d0 
 
   ! Now add the perturbation
   do j = lo(2), hi(2)
