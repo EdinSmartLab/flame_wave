@@ -7,4 +7,7 @@ module probdata_module
 
   double precision :: temp0, dtemp, x_half_max, x_half_width
 
+  ! lower boundary
+  logical         , save :: interp_BC, zero_vels
+
 end module probdata_module
