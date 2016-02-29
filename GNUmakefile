@@ -35,7 +35,6 @@ else
 
 endif
 
-
 Conductivity_dir := constant
 
 Bpack   := ./Make.package
