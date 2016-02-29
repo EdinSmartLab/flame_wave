@@ -311,6 +311,85 @@ contains
 
 
   
+#ifdef ROTATION
+  subroutine ca_phirotfill(phi,phi_l1,phi_l2, &
+                           phi_h1,phi_h2,domlo,domhi,delta,xlo,time,bc) bind(C)
+
+    implicit none
+
+    include 'bc_types.fi'
+
+    integer          :: phi_l1,phi_l2,phi_h1,phi_h2
+    integer          :: bc(2,2,*)
+    integer          :: domlo(2), domhi(2)
+    double precision :: delta(2), xlo(2), time
+    double precision :: phi(phi_l1:phi_h1,phi_l2:phi_h2)
+
+    call filcc(phi,phi_l1,phi_l2,phi_h1,phi_h2, &
+               domlo,domhi,delta,xlo,bc)
+
+  end subroutine ca_phirotfill
+
+  
+  
+  subroutine ca_rotxfill(rot,rot_l1,rot_l2,rot_h1,rot_h2, &
+                         domlo,domhi,delta,xlo,time,bc) bind(C)
+
+    implicit none
+
+    include 'bc_types.fi'
+
+    integer          :: rot_l1,rot_l2,rot_h1,rot_h2
+    integer          :: bc(2,2,*)
+    integer          :: domlo(2), domhi(2)
+    double precision :: delta(2), xlo(2), time
+    double precision :: rot(rot_l1:rot_h1,rot_l2:rot_h2)
+
+    call filcc(rot,rot_l1,rot_l2,rot_h1,rot_h2,domlo,domhi,delta,xlo,bc)
+
+  end subroutine ca_rotxfill
+
+
+
+  subroutine ca_rotyfill(rot,rot_l1,rot_l2,rot_h1,rot_h2, &
+                         domlo,domhi,delta,xlo,time,bc) bind(C)
+
+    implicit none
+
+    include 'bc_types.fi'
+
+    integer          :: rot_l1,rot_l2,rot_h1,rot_h2
+    integer          :: bc(2,2,*)
+    integer          :: domlo(2), domhi(2)
+    double precision :: delta(2), xlo(2), time
+    double precision :: rot(rot_l1:rot_h1,rot_l2:rot_h2)
+
+    call filcc(rot,rot_l1,rot_l2,rot_h1,rot_h2,domlo,domhi,delta,xlo,bc)
+
+  end subroutine ca_rotyfill
+
+
+
+  subroutine ca_rotzfill(rot,rot_l1,rot_l2,rot_h1,rot_h2, &
+                         domlo,domhi,delta,xlo,time,bc) bind(C)
+
+    implicit none
+
+    include 'bc_types.fi'
+
+    integer          :: rot_l1,rot_l2,rot_h1,rot_h2
+    integer          :: bc(2,2,*)
+    integer          :: domlo(2), domhi(2)
+    double precision :: delta(2), xlo(2), time
+    double precision :: rot(rot_l1:rot_h1,rot_l2:rot_h2)
+
+    call filcc(rot,rot_l1,rot_l2,rot_h1,rot_h2,domlo,domhi,delta,xlo,bc)
+
+  end subroutine ca_rotzfill
+#endif
+
+
+#ifdef GRAVITY  
   subroutine ca_gravxfill(grav,grav_l1,grav_l2,grav_h1,grav_h2, &
                           domlo,domhi,delta,xlo,time,bc) &
                           bind(C, name="ca_gravxfill")
@@ -417,5 +496,6 @@ contains
                domlo,domhi,delta,xlo,bc)
 
   end subroutine ca_phigravfill
-
+#endif
+  
 end module bc_fill_module
