@@ -17,6 +17,13 @@ subroutine PROBINIT (init,name,namlen,problo,probhi)
   integer, parameter :: maxlen = 256
   character probin*(maxlen)
 
+  integer :: a
+  real (kind=dp_t) :: g=2.0d14
+  real (kind=dp_t) :: xmin=0.0_dp_t, xmax=2.e3_dp_t, nx=640
+  real (kind=dp_t) :: delx, dCoord, xzn_1, xzn_2
+  double precision :: dpdr, rhog, hse_err
+
+
   ! Build "probin" filename from C++ land --
   ! the name of file containing fortin namelist.
 
@@ -36,6 +43,22 @@ subroutine PROBINIT (init,name,namlen,problo,probhi)
   ! Read initial model
   call read_model_file(model_name)
 
+  open(unit=15, file="output.dat")
+
+  dCoord=(xmax-xmin)/dble(nx)
+
+  do a=2,nx-1
+     xzn_1 = model_r(a)
+     xzn_2 = model_r(a-1)
+     delx=xzn_2-xzn_1
+     dpdr=(model_state(a,ipres_model)-model_state(a-1,ipres_model))/delx
+     rhog=0.5*(model_state(a,idens_model)+model_state(a-1,idens_model))*g
+     hse_err=abs(dpdr-rhog)/abs(dpdr)
+     write (15,*) model_r(a),"       ",dpdr,"        ",rhog,&
+          "       ",hse_err
+  enddo
+
+  close(15)
 
 end subroutine PROBINIT
 
@@ -89,9 +112,9 @@ subroutine ca_initdata(level,time,lo,hi,nscal, &
 
   type (eos_t) :: eos_state
 
-  open(9,file='probin',form='formatted',status='old')
-  read(9,perturbation)
-  close(unit=9)
+  open(1,file='probin',form='formatted',status='old')
+  read(1,perturbation)
+  close(unit=1)
 
   do j = lo(2), hi(2)
      y = xlo(2) + delta(2)*(float(j-lo(2)) + 0.5d0)
@@ -119,6 +142,10 @@ subroutine ca_initdata(level,time,lo,hi,nscal, &
 
         state(i,j,UEINT) = eos_state%e
         temppres(i,j) = eos_state%p
+
+        open(unit=2, file='eos.dat')
+        write(2,*) state(i,j,URHO), ' ',state(i,j,UTEMP),' ',temppres(i,j)
+
      end do
   end do
 
@@ -144,8 +171,10 @@ subroutine ca_initdata(level,time,lo,hi,nscal, &
      do i = lo(1), hi(1)
         x = xlo(1) + delta(1)*(float(i-lo(1)) + 0.5d0)
         
-        state(i,j,UTEMP)=temp0+dtemp/(1+exp((x-x_half_max)/x_half_width))
-         
+        if (state(i,j,UFS)>0.1) then
+                state(i,j,UTEMP)=state(i,j,UTEMP)+dtemp/(1+exp((x-x_half_max)/x_half_width))   
+        end if 
+ 
         do n = 1,nspec
            state(i,j,UFS+n-1) =  state(i,j,UFS+n-1) / state(i,j,URHO)
         end do
