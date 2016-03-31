@@ -8,7 +8,7 @@ DIM        = 2
 COMP	   = g++
 FCOMP	   = gfortran
 
-USE_MPI    = FALSE
+USE_MPI    = TRUE
 
 USE_GRAV   = TRUE
 USE_REACT = TRUE
@@ -35,7 +35,7 @@ else
 
 endif
 
-Conductivity_dir := constant
+Conductivity_dir := constant_opacity
 
 Bpack   := ./Make.package
 Blocs   := .

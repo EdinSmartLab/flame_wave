@@ -7,6 +7,8 @@ module probdata_module
 
   double precision :: temp0, dtemp, x_half_max, x_half_width
 
+  double precision, save :: H_min, cutoff_density
+
   ! lower boundary
   logical         , save :: interp_BC, zero_vels
 

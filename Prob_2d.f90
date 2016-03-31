@@ -34,6 +34,10 @@ subroutine PROBINIT (init,name,namlen,problo,probhi)
      probin(i:i) = char(name(i))
   end do
 
+  ! Namelist defaults
+  H_min = 1.d-4
+  cutoff_density = 500.d0
+
   
   ! Read namelists
   interp_BC = .false.
@@ -174,7 +178,7 @@ subroutine ca_initdata(level,time,lo,hi,nscal, &
      do i = lo(1), hi(1)
         x = xlo(1) + delta(1)*(float(i-lo(1)) + 0.5d0)
         
-        if (state(i,j,UFS)>0.1) then
+        if (state(i,j,UFS)>0.1 .AND. state(i,j,URHO)>1.0d5) then
                 state(i,j,UTEMP)=state(i,j,UTEMP)+dtemp/(1+exp((x-x_half_max)/x_half_width))   
         end if 
  
