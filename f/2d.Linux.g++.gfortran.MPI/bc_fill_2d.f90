@@ -106,7 +106,9 @@ contains
                       dens_zone = adv(i,j+1,URHO)
 
                       ! temperature and species held constant in BCs
-                      temp_zone = adv(i,j+1,UTEMP)
+                      temp_zone = interpolate(y,npts_model,model_r, &
+                           model_state(:,itemp_model))
+                                  !adv(i,j+1,UTEMP)
                       X_zone(:) = adv(i,j+1,UFS:UFS-1+nspec)/adv(i,j+1,URHO)
 
                       ! get pressure in zone above

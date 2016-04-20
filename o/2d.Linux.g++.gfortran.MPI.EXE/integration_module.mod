@@ -1,5 +1,5 @@
 GFORTRAN module version '10' created from /home/ltrnolan/Microphysics/integration/integration.f90
-MD5:14238e162046524e8f0bc8cb2fabdd55 -- If you edit this, you'll get what you deserve.
+MD5:fa18a95728c7e8a64e7968ff2bb375e0 -- If you edit this, you'll get what you deserve.
 
 (() () () () () () () () () () () () () () () () () () () () () () ()
 () () () ())
@@ -91,8 +91,10 @@ UNKNOWN-FL UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 DIMENSION)
 UNKNOWN-ACCESS (CONSTANT (REAL 8 0 0 0 REAL ()) 0 '0.00000000000000@0'))
 (28 'self_heat' (LOGICAL 4 0 0 0 LOGICAL ()) () (UNKNOWN-FL
 UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN UNKNOWN 0 0) UNKNOWN-ACCESS (
-CONSTANT (LOGICAL 4 0 0 0 LOGICAL ()) 0 1))) PUBLIC (() () () ()) () 0 0
-92185986)
+CONSTANT (LOGICAL 4 0 0 0 LOGICAL ()) 0 1)) (29 'shock' (LOGICAL 4 0 0 0
+LOGICAL ()) () (UNKNOWN-FL UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN UNKNOWN 0
+0) UNKNOWN-ACCESS (CONSTANT (LOGICAL 4 0 0 0 LOGICAL ()) 0 0))) PUBLIC (
+() () () ()) () 0 0 92185986)
 )
 
 ('do_burn' 0 2 'integration_init' 0 8 'integration_module' 0 9)

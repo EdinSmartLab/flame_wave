@@ -18,13 +18,13 @@ module reactions_module
 contains
 
   subroutine ca_react_state(lo,hi, &
-                           state,s_lo,s_hi, &
-                           reactions,r_lo,r_hi, &
-                           time,dt_react) bind(C, name="ca_react_state")
+                            state,s_lo,s_hi, &
+                            reactions,r_lo,r_hi, &
+                            time,dt_react) bind(C, name="ca_react_state")
 
     use network           , only : nspec, naux
     use meth_params_module, only : NVAR, URHO, UMX, UMY, UMZ, UEDEN, UEINT, UTEMP, &
-         UFS, UFX, dual_energy_eta3, allow_negative_energy
+         UFS, UFX, dual_energy_eta3, allow_negative_energy, USHK
     use burner_module
     use burn_type_module
     use bl_constants_module
@@ -65,6 +65,9 @@ contains
 
              state_in % xn  = state(i,j,k,UFS:UFS+nspec-1) * rhoInv
              state_in % aux = state(i,j,k,UFX:UFX+naux-1) * rhoInv
+
+             state_in % shock = .false.
+
 
              call burner(state_in, state_out, dt_react, time)
 

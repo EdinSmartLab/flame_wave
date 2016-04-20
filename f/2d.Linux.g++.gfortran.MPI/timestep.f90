@@ -356,7 +356,9 @@ contains
     double precision :: rhooinv, rhoninv
     double precision :: X_old(nspec), X_new(nspec), X_avg(nspec), X_dot(nspec)
     double precision :: e_old, e_new, e_avg, e_dot
-    double precision :: tau_X, tau_e, tau_CFL
+    double precision :: tau_X, tau_e
+    double precision :: tau_CFL
+
 
     double precision :: v(3), c
     type (eos_t)     :: eos_state
