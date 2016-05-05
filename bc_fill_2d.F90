@@ -102,7 +102,9 @@ contains
 
                       ! get pressure in zone above
                       eos_state%rho = adv(i,j+1,URHO)
-                      eos_state%T = adv(i,j+1,UTEMP)
+                      eos_state%T = interpolate(y,npts_model,model_r, &
+                           model_state(:,itemp_model))
+                                   !adv(i,j+1,UTEMP)
                       eos_state%xn(:) = adv(i,j+1,UFS:UFS-1+nspec)/adv(i,j+1,URHO)
 
                       call eos(eos_input_rt, eos_state)
@@ -163,9 +165,9 @@ contains
                    else
 
                       ! zero gradient velocity
-                      adv(i,j,UMX) = dens_zone*(adv(i,domlo(2),UMX)/adv(i,domlo(2),URHO))
-                      adv(i,j,UMY) = dens_zone*(adv(i,domlo(2),UMY)/adv(i,domlo(2),URHO))
-                      adv(i,j,UMZ) = dens_zone*(adv(i,domlo(2),UMZ)/adv(i,domlo(2),URHO))
+                      adv(i,j,UMX) = -dens_zone*(adv(i,domlo(2),UMX)/adv(i,domlo(2),URHO))
+                      adv(i,j,UMY) = -dens_zone*(adv(i,domlo(2),UMY)/adv(i,domlo(2),URHO))
+                      adv(i,j,UMZ) = -dens_zone*(adv(i,domlo(2),UMZ)/adv(i,domlo(2),URHO))
                    endif
 
                    eos_state%rho = dens_zone
